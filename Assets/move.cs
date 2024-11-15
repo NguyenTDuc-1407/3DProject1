@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class move : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float moveSpeed = 5f;
+    [SerializeField] Animator animator;
+    Vector3 moveInput;
+    Rigidbody rb;
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        movePlayer();
+    }
+    void movePlayer()
+    {
+        moveInput.x = Input.GetAxis("Horizontal");
+        moveInput.z = Input.GetAxis("Vertical");
+        animator.SetFloat("move", moveInput.sqrMagnitude);
+        transform.position += moveInput * moveSpeed * Time.deltaTime;
     }
 }
